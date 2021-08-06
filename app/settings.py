@@ -81,7 +81,18 @@ DB_PORT = int(os.getenv('DB_PORT') or '5432')
 DB_NAME = os.getenv('DB_NAME', 'postgres')
 DB_USER = os.getenv('DB_USER', 'postgres')
 DB_PASSWORD = os.getenv('DB_PASSWORD', 'postgres')
+DB_URL = os.getenv(
+    'DATABASE_URL',
+    None
+)
 
+if DB_URL:
+    url = DB_URL.replace('postgres://', '')
+    url_parts = url.split(':')
+    assert len(url_parts) == 3
+    DB_USER = url_parts[0]
+    DB_PASSWORD, DB_HOST = url_parts[1].split('@')
+    DB_NAME = url_parts[2].split('/')[1]
 
 DATABASES = {
     'default': {
