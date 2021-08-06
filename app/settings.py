@@ -25,8 +25,7 @@ SECRET_KEY = '*fbj1yz4=&znn@xk=d0(onh$e1a6sz#i1u*u-f(mpp_20hb-pu'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
