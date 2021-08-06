@@ -1,13 +1,16 @@
 {% load static %}
-
-{% block content %}
+<script defer src="{% static 'materialize.min.js' %}"></script>
+<link rel="stylesheet" href="{% static 'materialize.min.css' %}">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Anton">
+{% block content %}
 <script>
 
 const front_url = "{{ FRONT_URL | safe }}";
 
 
 document.addEventListener('DOMContentLoaded', async () => {
+    const elems = document.querySelectorAll('.carousel');
+    M.Carousel.init(elems, {});
     await get_active_slots();
 });
 
@@ -50,9 +53,14 @@ async function get_active_slots(){
 </head>
 <body>
 <div style="text-align: center">
-    <h1 style="font-family: 'Helvetica Neue'">Розыгрыш ВАЗ-2107</h1>
-    <img src='{% static "vaz.jpg" %}' width="40%">
-    <h3 style="font-family: 'Helvetica Neue'">Стоимость одного билета: 200₽<br>Больше билетов — выше шанс победить<br>Чтобы зарегистрироваться на участие, пиши</h3>
+    <h3 style="font-family: 'Helvetica Neue'">Розыгрыш ВАЗ-2107</h3>
+    <div class="carousel" style="height: 400px; margin: -80px auto 0;left: -150px">
+        <a class="carousel-item" ><img src='{% static "vaz1.jpg" %}' style="width: 500px"></a>
+        <a class="carousel-item" ><img src='{% static "vaz2.jpg" %}' style="width: 500px"></a>
+        <a class="carousel-item" ><img src='{% static "vaz3.jpg" %}' style="width: 500px"></a>
+        <a class="carousel-item" ><img src='{% static "vaz4.jpg" %}' style="width: 500px"></a>
+    </div>
+    <h5 style="margin-bottom: 30px">Стоимость одного билета: 200₽<br>Больше билетов — выше шанс победить<br>Чтобы зарегистрироваться на участие, пиши</h5>
     <div class="image" id="slots" style="display: grid; grid-template-columns: 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px; column-gap: 20px; row-gap: 20px; justify-content: center">
     </div>
 </div>
