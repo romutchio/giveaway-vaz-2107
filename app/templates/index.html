@@ -1,0 +1,61 @@
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Anton">
+<script>
+
+const front_url = "{{ FRONT_URL | safe }}";
+
+
+document.addEventListener('DOMContentLoaded', async () => {
+    await get_active_slots();
+});
+
+
+async function get_active_slots(){
+    const resp = await fetch(
+        `${front_url}/slots/`
+    );
+    const content = await resp.json();
+    const slots = document.getElementById("slots");
+    content.forEach((slot) => {
+        const block = document.createElement('div');
+        block.style['height'] = '60px';
+        block.style['width'] = '100px';
+        block.style['display'] = 'flex';
+        block.style['justify-content'] = 'center';
+        block.style['align-items'] = 'center';
+        if (slot.is_free){
+            block.style['background-image'] = "url({% static 'ticket_green.png' %})";
+        }
+        else{
+            block.style['background-image'] = "url({% static 'ticket_red.png' %})";
+        }
+        block.style['background-size'] = "100px 60px";
+        block.style['font-family'] = "Anton";
+        block.innerText = slot.id;
+        slots.appendChild(block);
+    })
+    console.log(content);
+}
+
+</script>
+{% endblock %}
+
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ласточка за 200</title>
+</head>
+<body>
+<div style="text-align: center">
+    <h1 style="font-family: 'Helvetica Neue'">Розыгрыш ВАЗ-2107</h1>
+    <img src='{% static "vaz.jpg" %}' width="40%">
+    <p style="font-family: 'Helvetica Neue'">Стоимость одного билета: 200₽</p>
+    <p style="font-family: 'Helvetica Neue'">Чтобы зарегистрироваться на участие, пиши</p>
+    <div class="image" id="slots" style="display: grid; grid-template-columns: 100px 100px 100px 100px 100px; column-gap: 20px; row-gap: 20px; justify-content: center">
+    </div>
+</div>
+</body>
+</html>
